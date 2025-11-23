@@ -715,7 +715,7 @@ footer {
 }
 
 .character-count {
-  float: right;
+  align-self: flex-end;
   font-weight: 600;
 }
 

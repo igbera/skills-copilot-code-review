@@ -1189,11 +1189,22 @@ document.addEventListener("DOMContentLoaded", () => {
         method = "PUT";
       } else {
         // Create new announcement
-        url = `/announcements?${body.toString()}`;
+        url = `/announcements`;
         method = "POST";
       }
 
-      const response = await fetch(url, { method });
+      const fetchOptions = { method };
+      if (method === "POST") {
+        fetchOptions.body = body;
+        fetchOptions.headers = { "Content-Type": "application/x-www-form-urlencoded" };
+      }
+      const response = await fetch(url, fetchOptions);
+      let fetchOptions = { method };
+      if (method === "PUT") {
+        fetchOptions.body = body;
+        fetchOptions.headers = { "Content-Type": "application/x-www-form-urlencoded" };
+      }
+      const response = await fetch(url, fetchOptions);
 
       if (response.ok) {
         const action = editingAnnouncementId ? "updated" : "created";

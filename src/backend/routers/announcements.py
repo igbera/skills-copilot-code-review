@@ -34,7 +34,7 @@ def get_announcements(active_only: bool = Query(False)) -> List[Dict[str, Any]]:
     query = {}
     
     if active_only:
-        now = datetime.utcnow().isoformat()
+        now = datetime.utcnow()
         query = {
             "$and": [
                 {"$or": [
@@ -190,7 +190,7 @@ def update_announcement(
                     detail="Start date must be before expiration date"
                 )
         except ValueError:
-            pass  # Already validated above
+            raise HTTPException(status_code=400, detail="Invalid date format in start_date or expiration_date")
     
     if update_fields:
         announcements_collection.update_one(
